@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/bun.lockb": true,
+    "**/README.md": true
+  }
+}
