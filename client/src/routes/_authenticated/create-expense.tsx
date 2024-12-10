@@ -4,7 +4,11 @@ import { Label } from "@/components/ui/label";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import { useForm } from "@tanstack/react-form";
+import { zodValidator } from "@tanstack/zod-form-adapter";
 import { api } from "@/lib/api";
+
+import { createExpenseSchema } from "@server/sharedTypes";
+import { Calendar } from "@/components/ui/calendar";
 
 export const Route = createFileRoute("/_authenticated/create-expense")({
   component: CreateExpense,
@@ -12,11 +16,12 @@ export const Route = createFileRoute("/_authenticated/create-expense")({
 
 function CreateExpense() {
   const navigate = useNavigate();
-
   const form = useForm({
+    validatorAdapter: zodValidator(),
     defaultValues: {
       title: "",
-      amount: "",
+      amount: "0",
+      date: new Date().toISOString(),
     },
     onSubmit: async ({ value }) => {
       const res = await api.expenses.$post({ json: value });
@@ -37,52 +42,76 @@ function CreateExpense() {
           e.stopPropagation();
           form.handleSubmit();
         }}
-        className="max-w-xl m-auto"
+        className="flex flex-col gap-y-4 max-w-xl m-auto"
       >
-        <div>
-          <form.Field
-            name="title"
-            children={(field) => (
-              <>
-                <Label htmlFor={field.name}>Title</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-                {field.state.meta.isTouched &&
-                field.state.meta.errors.length ? (
-                  <em>{field.state.meta.errors.join(", ")}</em>
-                ) : null}
-                {field.state.meta.isValidating ? "Validating..." : null}
-              </>
-            )}
-          />
+        <form.Field
+          name="title"
+          validators={{
+            onChange: createExpenseSchema.shape.title,
+          }}
+          children={(field) => (
+            <div>
+              <Label htmlFor={field.name}>Title</Label>
+              <Input
+                id={field.name}
+                name={field.name}
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+              {field.state.meta.isTouched && field.state.meta.errors.length ? (
+                <em>{field.state.meta.errors.join(", ")}</em>
+              ) : null}
+              {field.state.meta.isValidating ? "Validating..." : null}
+            </div>
+          )}
+        />
+        <form.Field
+          name="amount"
+          validators={{
+            onChange: createExpenseSchema.shape.amount,
+          }}
+          children={(field) => (
+            <div>
+              <Label htmlFor={field.name}>Amount</Label>
+              <Input
+                id={field.name}
+                name={field.name}
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                type="number"
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+              {field.state.meta.isTouched && field.state.meta.errors.length ? (
+                <em>{field.state.meta.errors.join(", ")}</em>
+              ) : null}
+              {field.state.meta.isValidating ? "Validating..." : null}
+            </div>
+          )}
+        />
 
-          <form.Field
-            name="amount"
-            children={(field) => (
-              <>
-                <Label htmlFor={field.name}>Amount</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  type="number"
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-                {field.state.meta.isTouched &&
-                field.state.meta.errors.length ? (
-                  <em>{field.state.meta.errors.join(", ")}</em>
-                ) : null}
-                {field.state.meta.isValidating ? "Validating..." : null}
-              </>
-            )}
-          />
-        </div>
+        <form.Field
+          name="date"
+          validators={{
+            onChange: createExpenseSchema.shape.date,
+          }}
+          children={(field) => (
+            <div className="self-center">
+              <Calendar
+                mode="single"
+                selected={new Date(field.state.value)}
+                onSelect={(date) =>
+                  field.handleChange((date ?? new Date()).toISOString())
+                }
+                className="rounded-md border"
+              />
+              {field.state.meta.isTouched && field.state.meta.errors.length ? (
+                <em>{field.state.meta.errors.join(", ")}</em>
+              ) : null}
+              {field.state.meta.isValidating ? "Validating..." : null}
+            </div>
+          )}
+        />
 
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
