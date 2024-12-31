@@ -1,0 +1,9 @@
+{
+  "files.exclude": {
+    "node_modules": true,
+    "Dockerfile*": true,
+    ".dockerignore": true,
+    "bun.lockb": true,
+    "README.md": true,
+  }
+}
