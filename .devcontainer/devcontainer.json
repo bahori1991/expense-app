@@ -1,0 +1,30 @@
+{
+  "name": "bun-devcontainer-template",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "appuser",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces,type=bind,consistency=cached",
+  "workspaceFolder": "/workspaces",
+  "mounts": [
+    "source=/home/bahori1991/.bashrc,target=/home/appuser/.bashrc,type=bind",
+    "source=/home/bahori1991/.ssh,target=/home/appuser/.ssh,type=bind"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "streetsidesoftware.code-spell-checker",
+        "christian-kohler.npm-intellisense",
+        "christian-kohler.path-intellisense",
+        "humao.rest-client",
+        "bradlc.vscode-tailwindcss",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "biomejs.biome"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}
