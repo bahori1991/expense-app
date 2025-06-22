@@ -1,5 +1,5 @@
 {
-  "name": "bun-devcontainer-template",
+  "name": "expense-app",
   "build": {
     "dockerfile": "Dockerfile"
   },
