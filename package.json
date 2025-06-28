@@ -1,0 +1,38 @@
+{
+  "name": "expense-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --write"
+  },
+  "dependencies": {
+    "@better-fetch/fetch": "^1.1.18",
+    "@conform-to/react": "^1.7.2",
+    "@conform-to/zod": "^1.7.2",
+    "@t3-oss/env-nextjs": "^0.13.8",
+    "better-auth": "^1.2.10",
+    "drizzle-orm": "^0.44.2",
+    "hono": "^4.8.2",
+    "next": "15.3.4",
+    "pg": "^8.16.2",
+    "postgres": "^3.4.7",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.5",
+    "@tailwindcss/postcss": "^4.1.10",
+    "@types/node": "^20.19.1",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "drizzle-kit": "^0.31.2",
+    "tailwindcss": "^4.1.10",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "cSpell.words": [
+    "appuser",
+    "bahori",
+    "bradlc",
+    "eamodio",
+    "humao",
+    "kohler",
+    "localtime",
+    "mhutchie",
+    "neondatabase",
+    "turbopack",
+    "zoneinfo"
+  ],
+  "files.exclude": {
+    ".next": true,
+    "node_modules": true,
+  },
+  "material-icon-theme.folders.associations": {
+    "features": "content",
+  }
+}

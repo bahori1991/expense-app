@@ -27,6 +27,11 @@ RUN mkdir -p /home/appuser/.ssh && \
 # git bash completionの設定
 RUN echo "source /usr/share/bash-completion/completions/git" >> /home/appuser/.bashrc
 
+# 時刻を日本時間に設定
+ENV TZ=Asia/Tokyo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN echo "export TZ=Asia/Tokyo" >> /home/appuser/.bashrc
+
 # 作業ディレクトリの作成
 WORKDIR /workspaces
 
