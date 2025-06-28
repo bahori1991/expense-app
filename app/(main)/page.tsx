@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getServerSession } from "@/lib/session";
+import { honoClient } from "@/server";
 import { auth } from "@/server/auth";
 
 async function logoutAction() {
@@ -13,9 +13,10 @@ async function logoutAction() {
 }
 
 export default async function Home() {
-  const { user } = await getServerSession();
+  const { api } = await honoClient();
+  const res = await api.user.$get();
 
-  if (!user) {
+  if (!res.ok) {
     return (
       <div>
         <h1>Unauthorized</h1>
@@ -25,10 +26,12 @@ export default async function Home() {
     );
   }
 
+  const { user } = await res.json();
+
   return (
     <div>
       <h1>Home</h1>
-      <p>Welcome, {user?.name}</p>
+      <p>Welcome, {user ? user.name : "Guest"}</p>
       <form action={logoutAction}>
         <button type="submit">Logout</button>
       </form>
