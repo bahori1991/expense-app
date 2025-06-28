@@ -22,13 +22,9 @@ const authMiddleware = createMiddleware(async (c, next) => {
   return next();
 });
 
-export const userRoutes = new Hono<Env>().get(
-  "/",
-  authMiddleware,
-  async (c) => {
-    const user = c.get("user");
-    const session = c.get("session");
+export const userRoutes = new Hono<Env>().get("/", authMiddleware, async (c) => {
+  const user = c.get("user");
+  const session = c.get("session");
 
-    return c.json({ user, session });
-  },
-);
+  return c.json({ user, session });
+});

@@ -4,6 +4,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { redirect } from "next/navigation";
 import { auth } from "@/server/auth";
 import { signupSchema } from "@/server/auth/schema";
+import { APIError } from "better-auth/api";
 
 export async function signupAction(_prev: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
@@ -16,18 +17,23 @@ export async function signupAction(_prev: unknown, formData: FormData) {
 
   const { name, email, password } = submission.value;
 
-  const res = await auth.api.signUpEmail({
-    body: {
-      name,
-      email,
-      password,
-    },
-    asResponse: true,
-  });
+  try {
+    await auth.api.signUpEmail({
+      body: {
+        name,
+        email,
+        password,
+      },
+    });
+  } catch (error) {
+    if (error instanceof APIError) {
+      return submission.reply({
+        formErrors: [`Failed to sign up : ${error.body?.message ?? "Something went wrong"}`],
+      });
+    }
 
-  if (!res.ok) {
     return submission.reply({
-      formErrors: ["Failed to sign up"],
+      formErrors: ["Failed to sign up : Something went wrong"],
     });
   }
 

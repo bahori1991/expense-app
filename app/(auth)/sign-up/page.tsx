@@ -3,7 +3,7 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { useActionState } from "react";
-import { signupAction } from "@/app/(auth)/_actions/auth";
+import { signupAction } from "@/app/(auth)/sign-up/action";
 import { signupSchema } from "@/server/auth/schema";
 
 export default function SignupPage() {
@@ -34,6 +34,9 @@ export default function SignupPage() {
           placeholder="Name"
           className="p-2 rounded-md border border-gray-300"
         />
+        {fields.name.errors && (
+          <p className="text-red-500">{fields.name.errors.join(", ")}</p>
+        )}
         <input
           {...getInputProps(fields.email, {
             type: "email",
@@ -41,6 +44,9 @@ export default function SignupPage() {
           placeholder="Email"
           className="p-2 rounded-md border border-gray-300"
         />
+        {fields.email.errors && (
+          <p className="text-red-500">{fields.email.errors.join(", ")}</p>
+        )}
         <input
           {...getInputProps(fields.password, {
             type: "password",
@@ -48,6 +54,9 @@ export default function SignupPage() {
           placeholder="Password"
           className="p-2 rounded-md border border-gray-300"
         />
+        {fields.password.errors && (
+          <p className="text-red-500">{fields.password.errors.join(", ")}</p>
+        )}
         <button
           type="submit"
           disabled={isPending}
@@ -55,9 +64,7 @@ export default function SignupPage() {
         >
           {isPending ? "..." : "Signup"}
         </button>
-        {form.errors && (
-          <p className="text-red-500">{form.errors.join(", ")}</p>
-        )}
+        {form.errors && <p className="text-red-500">{form.errors.join(", ")}</p>}
       </form>
     </div>
   );

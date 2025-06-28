@@ -34,6 +34,9 @@ export default function LoginPage() {
           placeholder="Email"
           className="p-2 rounded-md border border-gray-300"
         />
+        {fields.email.errors && (
+          <p className="text-red-500">{fields.email.errors.join(", ")}</p>
+        )}
         <input
           {...getInputProps(fields.password, {
             type: "password",
@@ -41,12 +44,13 @@ export default function LoginPage() {
           placeholder="Password"
           className="p-2 rounded-md border border-gray-300"
         />
+        {fields.password.errors && (
+          <p className="text-red-500">{fields.password.errors.join(", ")}</p>
+        )}
         <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
           {isPending ? "..." : "Login"}
         </button>
-        {form.errors && (
-          <p className="text-red-500">{form.errors.join(", ")}</p>
-        )}
+        {form.errors && <p className="text-red-500">{form.errors.join(", ")}</p>}
       </form>
     </div>
   );
