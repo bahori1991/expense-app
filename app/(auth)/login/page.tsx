@@ -16,7 +16,7 @@ export default function LoginPage() {
         schema: loginSchema,
       });
     },
-    shouldRevalidate: "onInput",
+    shouldRevalidate: "onBlur",
   });
 
   return (
@@ -34,9 +34,7 @@ export default function LoginPage() {
           placeholder="Email"
           className="p-2 rounded-md border border-gray-300"
         />
-        {fields.email.errors && (
-          <p className="text-red-500">{fields.email.errors.join(", ")}</p>
-        )}
+        {fields.email.errors && <p className="text-red-500">{fields.email.errors.join(", ")}</p>}
         <input
           {...getInputProps(fields.password, {
             type: "password",

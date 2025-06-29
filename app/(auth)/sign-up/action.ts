@@ -1,10 +1,10 @@
 "use server";
 
 import { parseWithZod } from "@conform-to/zod";
+import { APIError } from "better-auth/api";
 import { redirect } from "next/navigation";
 import { auth } from "@/server/auth";
 import { signupSchema } from "@/server/auth/schema";
-import { APIError } from "better-auth/api";
 
 export async function signupAction(_prev: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {

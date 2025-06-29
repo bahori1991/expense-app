@@ -1,40 +1,34 @@
 import { headers } from "next/headers";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { honoClient } from "@/server";
-import { auth } from "@/server/auth";
+import { Suspense } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { honoClient } from "@/server/client";
 
-async function logoutAction() {
-  "use server";
-  await auth.api.signOut({
-    headers: await headers(),
-  });
-  redirect("/");
+async function TotalSpent() {
+  const { api } = await honoClient(await headers());
+  const res = await api.expenses["total-spent"].$get();
+
+  if (!res.ok) {
+    return <div className="text-red-500">Something went wrong</div>;
+  }
+
+  const { total } = await res.json();
+  return <div>{total}</div>;
 }
 
 export default async function Home() {
-  const { api } = await honoClient();
-  const res = await api.user.$get();
-
-  if (!res.ok) {
-    return (
-      <div>
-        <h1>Unauthorized</h1>
-        <p>You are not authorized to access this page</p>
-        <Link href="/login">Login</Link>
-      </div>
-    );
-  }
-
-  const { user } = await res.json();
-
   return (
-    <div>
-      <h1>Home</h1>
-      <p>Welcome, {user ? user.name : "Guest"}</p>
-      <form action={logoutAction}>
-        <button type="submit">Logout</button>
-      </form>
+    <div className="flex flex-col gap-4 p-4">
+      <Card className="w-[350px] mx-auto">
+        <CardHeader>
+          <CardTitle>Total Spent</CardTitle>
+          <CardDescription>The total amount you've spent</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Suspense fallback={<div>Loading...</div>}>
+            <TotalSpent />
+          </Suspense>
+        </CardContent>
+      </Card>
     </div>
   );
 }

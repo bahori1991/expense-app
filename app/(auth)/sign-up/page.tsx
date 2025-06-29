@@ -16,7 +16,7 @@ export default function SignupPage() {
         schema: signupSchema,
       });
     },
-    shouldRevalidate: "onInput",
+    shouldRevalidate: "onBlur",
   });
 
   return (
@@ -34,9 +34,7 @@ export default function SignupPage() {
           placeholder="Name"
           className="p-2 rounded-md border border-gray-300"
         />
-        {fields.name.errors && (
-          <p className="text-red-500">{fields.name.errors.join(", ")}</p>
-        )}
+        {fields.name.errors && <p className="text-red-500">{fields.name.errors.join(", ")}</p>}
         <input
           {...getInputProps(fields.email, {
             type: "email",
@@ -44,9 +42,7 @@ export default function SignupPage() {
           placeholder="Email"
           className="p-2 rounded-md border border-gray-300"
         />
-        {fields.email.errors && (
-          <p className="text-red-500">{fields.email.errors.join(", ")}</p>
-        )}
+        {fields.email.errors && <p className="text-red-500">{fields.email.errors.join(", ")}</p>}
         <input
           {...getInputProps(fields.password, {
             type: "password",

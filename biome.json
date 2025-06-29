@@ -6,16 +6,7 @@
     "useIgnoreFile": false
   },
   "files": {
-    "includes": [
-      "app/**",
-      "components/**",
-      "features/**",
-      "hooks/**",
-      "lib/**",
-      "server/**",
-      "types/**",
-      "utils/**"
-    ]
+    "includes": ["app/**", "features/**", "hooks/**", "lib/**", "server/**", "types/**", "utils/**"]
   },
   "formatter": {
     "enabled": true,
