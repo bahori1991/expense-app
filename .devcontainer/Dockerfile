@@ -1,9 +1,14 @@
 FROM oven/bun:latest
 
 # システムパッケージの更新とgit&bash-completionのインストール
-RUN apt update && apt install -y git bash-completion openssh-client && \
+RUN apt update && apt install -y git bash-completion openssh-client curl xz-utils && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
+
+# turso CLIのインストール
+RUN curl -L https://github.com/tursodatabase/turso-cli/releases/download/v1.0.11/turso-cli_Linux_x86_64.tar.gz | tar -xz && \
+    mv turso /usr/local/bin/ && \
+    chmod +x /usr/local/bin/turso
 
 # 既存のbunユーザーを削除
 RUN userdel -r bun || true
@@ -23,6 +28,9 @@ RUN mkdir -p /workspaces && \
 RUN mkdir -p /home/appuser/.ssh && \
     chown -R appuser:appuser /home/appuser/.ssh && \
     chmod 700 /home/appuser/.ssh
+
+# turso CLIのパスを追加
+RUN echo 'export PATH="$HOME/.turso:$PATH"' >> /home/appuser/.bashrc
 
 # git bash completionの設定
 RUN echo "source /usr/share/bash-completion/completions/git" >> /home/appuser/.bashrc

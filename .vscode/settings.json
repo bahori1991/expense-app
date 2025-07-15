@@ -6,10 +6,12 @@
     "eamodio",
     "humao",
     "kohler",
+    "libsql",
     "localtime",
     "mhutchie",
     "neondatabase",
     "turbopack",
+    "TURSO",
     "zoneinfo"
   ],
   "files.exclude": {

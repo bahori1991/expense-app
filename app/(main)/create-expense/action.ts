@@ -2,7 +2,7 @@
 
 import { parseWithZod } from "@conform-to/zod";
 import { redirect } from "next/navigation";
-import { honoClient } from "@/server/client";
+import { api } from "@/server/client";
 import { createPostSchema } from "@/server/routes/expenses";
 
 export async function createExpenseAction(_prev: unknown, formData: FormData) {
@@ -17,7 +17,6 @@ export async function createExpenseAction(_prev: unknown, formData: FormData) {
   const { title, amount } = submission.value;
 
   try {
-    const { api } = await honoClient();
     const res = await api.expenses.$post({
       json: {
         title,

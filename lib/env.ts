@@ -2,16 +2,17 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
 export const env = createEnv({
-  client: {
-    NEXT_PUBLIC_API_URL: z.string().url(),
-  },
+  client: {},
   server: {
-    DATABASE_URL: z.string().url(),
+    BETTER_AUTH_URL: z.string().url(),
     BETTER_AUTH_SECRET: z.string(),
+    TURSO_CONNECTION_URL: z.string().url(),
+    TURSO_AUTH_TOKEN: z.string(),
   },
   runtimeEnv: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-    DATABASE_URL: process.env.DATABASE_URL,
+    BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+    TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL,
+    TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
   },
 });

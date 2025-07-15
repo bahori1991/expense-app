@@ -1,8 +1,6 @@
-import { headers } from "next/headers";
-import { honoClient } from "@/server/client";
+import { api } from "@/server/client";
 
 export default async function ProfilePage() {
-  const { api } = await honoClient(await headers());
   const res = await api.user.$get();
 
   if (!res.ok) {

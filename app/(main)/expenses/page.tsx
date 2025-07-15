@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -10,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { honoClient } from "@/server/client";
+import { api } from "@/server/client";
 
 export default function ExpensesPage() {
   return (
@@ -33,7 +32,6 @@ export default function ExpensesPage() {
 }
 
 async function ExpensesRows() {
-  const { api } = await honoClient(await headers());
   const res = await api.expenses.$get();
 
   if (!res.ok) {
