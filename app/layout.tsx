@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body>{children}</body>
+      <body className="vsc-initialized">{children}</body>
     </html>
   );
 }

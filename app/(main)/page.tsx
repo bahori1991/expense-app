@@ -1,12 +1,17 @@
 import { Suspense } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { api } from "@/server/client";
 
 async function TotalSpent() {
-  return (
-    <div>
-      <h1>Total Spent</h1>
-    </div>
-  );
+  const res = await api.user.$get();
+
+  if (!res.ok) {
+    return <div>Something went wrong</div>;
+  }
+
+  const { user } = await res.json();
+
+  return <div>{user?.name}</div>;
 }
 
 export default async function Home() {

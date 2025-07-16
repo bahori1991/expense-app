@@ -11,6 +11,9 @@ type Env = {
 export const getUser = createMiddleware<Env>(async (c, next) => {
   try {
     const session = await auth.api.getSession({ headers: c.req.raw.headers });
+
+    console.log("headers", c.req.raw.headers);
+
     if (!session) {
       return c.json({ error: "Unauthorized" }, 401);
     }
